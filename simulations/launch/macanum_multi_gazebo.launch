@@ -1,0 +1,250 @@
+<!-- 
+author:  fulei 
+date:    2022.09.28
+summary： multi ackerman robots in gazebo
+
+2022.09.29：
+去掉控制器 spawner、yaml文件的ns属性，防止和group重复加命名空间
+-->
+
+<launch>	
+	<!--robot_0的初始位置-->
+	<arg name="x_pos0" default="0.00"/>
+  	<arg name="y_pos0" default="-5.00"/>
+  	<arg name="z_pos0" default="0"/>
+
+	<!--robot_1的初始位置-->
+	<arg name="x_pos1" default="-1.15"/>
+  	<arg name="y_pos1" default="-4.86"/>
+  	<arg name="z_pos1" default="0"/> 
+
+	<!--robot_2的初始位置-->
+	<arg name="x_pos2" default="-2.25"/>
+  	<arg name="y_pos2" default="-4.46"/>
+  	<arg name="z_pos2" default="0"/>
+
+	<!--robot_3的初始位置-->
+	<arg name="x_pos3" default="-3.22"/>
+  	<arg name="y_pos3" default="-3.82"/>
+  	<arg name="z_pos3" default="0"/>
+
+	<!--robot_4的初始位置-->
+	<arg name="x_pos4" default="-4.02"/>
+  	<arg name="y_pos4" default="-2.97"/>
+  	<arg name="z_pos4" default="0"/>
+
+	<!--robot_5的初始位置-->
+	<arg name="x_pos5" default="-4.60"/>
+  	<arg name="y_pos5" default="-1.95"/>
+  	<arg name="z_pos5" default="0"/>
+
+	<!--robot_6的初始位置-->
+	<arg name="x_pos6" default="-4.92"/>
+  	<arg name="y_pos6" default="-0.84"/>
+  	<arg name="z_pos6" default="0"/>
+	
+	<!--robot_7的初始位置-->
+	<arg name="x_pos7" default="-5.00"/>
+  	<arg name="y_pos7" default="-0.00"/>
+  	<arg name="z_pos7" default="0"/>
+
+	<!--加载gazebo仿真地图-->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<!--<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace.world" />-->
+		<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/gb1.world" />
+		<arg name="paused" value="false"/>
+		<arg name="use_sim_time" value="true"/>
+		<arg name="gui" value="true"/>
+		<arg name="headless" value="false"/>
+		<arg name="debug" value="false"/>
+	</include>
+	
+
+	<!--机器人robot_0-->
+	<group ns="robot_0">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_0 ns:=robot_0" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_0" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_0 -param robot_description -x $(arg x_pos0) -y $(arg y_pos0) -z $(arg z_pos0)"/> 
+	
+	</group>
+	
+	<!--机器人robot_1-->
+	<group ns="robot_1">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_1 ns:=robot_1" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_1" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_1 -param robot_description -x $(arg x_pos1) -y $(arg y_pos1) -z $(arg z_pos1)"/> 
+	
+	</group>
+	
+	<!--机器人robot_2-->
+	<group ns="robot_2">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_2 ns:=robot_2" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_2" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_2 -param robot_description -x $(arg x_pos2) -y $(arg y_pos2) -z $(arg z_pos2)"/> 
+	
+	</group>
+	
+	<!--机器人robot_3-->
+	<group ns="robot_3">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_3 ns:=robot_3" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_3" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_3 -param robot_description -x $(arg x_pos3) -y $(arg y_pos3) -z $(arg z_pos3)"/> 
+	
+	</group>
+	
+	<!--机器人robot_4-->
+	<group ns="robot_4">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_4 ns:=robot_4" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_4" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_4 -param robot_description -x $(arg x_pos4) -y $(arg y_pos4) -z $(arg z_pos4)"/> 
+	
+	</group>
+	
+	<!--机器人robot_5-->
+	<group ns="robot_5">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_5 ns:=robot_5" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_5" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_5 -param robot_description -x $(arg x_pos5) -y $(arg y_pos5) -z $(arg z_pos5)"/> 
+	
+	</group>
+	
+	<!--机器人robot_6-->
+	<group ns="robot_6">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_6 ns:=robot_6" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_6" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_6 -param robot_description -x $(arg x_pos6) -y $(arg y_pos6) -z $(arg z_pos6)"/> 
+	
+	</group>
+	
+	<!--机器人robot_7-->
+	<group ns="robot_7">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_7 ns:=robot_7" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_7" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_7 -param robot_description -x $(arg x_pos7) -y $(arg y_pos7) -z $(arg z_pos7)"/> 
+	
+	</group>
+	
+	
+</launch>
+
+

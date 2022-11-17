@@ -1,0 +1,2 @@
+/ackermann_cmd_mux/output   --->   ackermann_cmd_mux/output
+/left_rear_wheel_velocity_controller/command  --->  left_rear_wheel_velocity_controller/command

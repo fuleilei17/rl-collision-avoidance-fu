@@ -1,0 +1,120 @@
+<launch>
+	
+	<!--robot_0的初始位置-->
+	<arg name="x_pos0" default="0.00"/>
+  	<arg name="y_pos0" default="-5.00"/>
+  	<arg name="z_pos0" default="0"/>
+
+	<!--robot_1的初始位置-->
+	<arg name="x_pos1" default="-1.15"/>
+  	<arg name="y_pos1" default="-4.86"/>
+  	<arg name="z_pos1" default="0"/> 
+
+	<!--robot_2的初始位置-->
+	<arg name="x_pos2" default="-2.25"/>
+  	<arg name="y_pos2" default="-4.46"/>
+  	<arg name="z_pos2" default="0"/>
+
+	<!--robot_3的初始位置-->
+	<arg name="x_pos3" default="-3.22"/>
+  	<arg name="y_pos3" default="-3.82"/>
+  	<arg name="z_pos3" default="0"/>
+
+	<!--robot_4的初始位置-->
+	<arg name="x_pos4" default="-4.02"/>
+  	<arg name="y_pos4" default="-2.97"/>
+  	<arg name="z_pos4" default="0"/>
+
+	<!--robot_5的初始位置-->
+	<arg name="x_pos5" default="-4.60"/>
+  	<arg name="y_pos5" default="-1.95"/>
+  	<arg name="z_pos5" default="0"/>
+
+	<!--robot_6的初始位置-->
+	<arg name="x_pos6" default="-4.92"/>
+  	<arg name="y_pos6" default="-0.84"/>
+  	<arg name="z_pos6" default="0"/>
+	
+	<!--robot_7的初始位置-->
+	<arg name="x_pos7" default="-5.00"/>
+  	<arg name="y_pos7" default="-0.00"/>
+  	<arg name="z_pos7" default="0"/>
+
+	<!--加载gazebo仿真地图-->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<!--<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace.world" />-->
+		<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/gb1.world" />
+		<arg name="paused" value="false"/>
+		<arg name="use_sim_time" value="true"/>
+		<arg name="gui" value="true"/>
+		<arg name="headless" value="false"/>
+		<arg name="debug" value="false"/>
+	</include>
+
+	<!--机器人robot_0-->
+	<group ns="robot_0">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_0 "/>
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_0 -param robot_description -x $(arg x_pos0) -y $(arg y_pos0) -z $(arg z_pos0) " />
+	</group>
+
+	
+	<!--机器人robot_1-->
+	<group ns="robot_1">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_1" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_1 -param robot_description -x $(arg x_pos1) -y $(arg y_pos1) -z $(arg z_pos1) " />
+	</group>
+
+	<!--机器人robot_2-->
+	<group ns="robot_2">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_2" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_2 -param robot_description -x $(arg x_pos2) -y $(arg y_pos2) -z $(arg z_pos2) " />
+	</group>
+
+	<!--机器人robot_3-->
+	<group ns="robot_3">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_3" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_3 -param robot_description -x $(arg x_pos3) -y $(arg y_pos3) -z $(arg z_pos3) " />
+	</group>
+
+	<!--机器人robot_4-->
+	<group ns="robot_4">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_4" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_4 -param robot_description -x $(arg x_pos4) -y $(arg y_pos4) -z $(arg z_pos4) " />
+	</group>
+
+	<!--机器人robot_5-->
+	<group ns="robot_5">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_5" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_5 -param robot_description -x $(arg x_pos5) -y $(arg y_pos5) -z $(arg z_pos5) " />
+	</group>
+
+	<!--机器人robot_6-->
+	<group ns="robot_6">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_6" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_6 -param robot_description -x $(arg x_pos6) -y $(arg y_pos6) -z $(arg z_pos6) " />
+	</group>
+
+	<!--机器人robot_7-->
+	<group ns="robot_7">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_7" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_7 -param robot_description -x $(arg x_pos7) -y $(arg y_pos7) -z $(arg z_pos7) " />
+	</group>
+
+
+</launch>

@@ -1,0 +1,10 @@
+# worlds
+aws-robomaker-bookstore-world/
+aws-robomaker-hospital-world/
+aws-robomaker-small-warehouse-world/
+
+#policy
+rl-collision-avoidance/policy/fl*
+
+#vscode
+rl-collision-avoidance/.vscode/

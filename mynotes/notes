@@ -1,0 +1,75 @@
+1.how to test in stage
+
+rosrun stage_ros_add_pose_and_crash stageros /home/wht/Desktop/rl-ca/src/rl-collision-avoidance/worlds/circle.world
+
+mpiexec -np 50 python circle_test.py
+
+
+
+
+2.how to test in Gazebo
+
+roslaunch turtlebot3_gazebo tb3_multi.launch
+
+mpiexec -np 8 python circle_test.py #目前仅设置了8个机器人
+
+
+####为了Gazebo中运行所做的调整
+
+1.注释掉circle_test.py中的
+'''if env.index == 0:
+        env.reset_world()
+
+    env.reset_pose()'''
+相应地注释掉circle_world.py中的service：
+# -----------Service-------------------
+        #self.reset_stage = rospy.ServiceProxy('reset_positions', Empty)
+
+
+2.注释掉circle_world.py中的# # Wait until the first callback循环部分；或者仅仅去掉/is_crahed话题判断
+
+        '''callflag=0
+        while self.scan is None or self.speed is None or self.state is None\
+                or self.speed_GT is None or self.state_GT is None or self.is_crashed is None:
+
+
+            #调试
+            callflag=callflag+1
+            print("enter the loop of waiting for callback:%d"%(callflag))
+            
+            pass
+        #调试
+        print("out of waiting for callback loop")'''
+
+
+3.circle_world.py中的雷达回调函数中加入碰撞检测部分##Gazebo中没有/is_crashed话题
+    def laser_scan_callback(self, scan):
+        self.scan_param = [scan.angle_min, scan.angle_max, scan.angle_increment, scan.time_increment,
+                           scan.scan_time, scan.range_min, scan.range_max]
+        self.scan = np.array(scan.ranges)
+        self.laser_cb_num += 1
+
+        ''''碰撞检测'''
+        self.LIDAR_ERR = 0.05
+        self.scan_filter = []
+        for i in range(360):
+            if i <= 15 or i > 335:
+                if self.scan[i] >= self.LIDAR_ERR:
+                    self.scan_filter.append(self.scan[i])
+        if min(self.scan_filter) < 0.2:#避障距离设置为0.2m
+            self.is_crashed=1
+        else:
+            self.is_crashed=0
+相应地注释掉circle_world.py中的/is_crashed话题回调函数：
+       '''def crash_callback(self, flag):
+        self.is_crashed = flag.data'''
+
+4.将circle_world.py中的话题/base_scan换成Gazebo中的/scan
+
+
+
+
+#  模型配置
+racecar.urdf.xacro-line468 ： <!--robotNamespace>/racecar</robotNamespace-->注释掉了，为满足多机器人命名空间的配置
+
+

@@ -1,0 +1,7 @@
+ROS_NAMESPACE=robot_0 rosrun racecar_description keyboard_teleop.py
+
+2.how to test in Gazebo
+
+roslaunch simulations macanum_multi_gazebo.launch
+
+mpiexec -np 8 python circle_test.py #目前仅设置了8个机器人
