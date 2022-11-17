@@ -1,0 +1,13 @@
+<launch>
+    <!--robot_0的初始位置-->
+	<arg name="x_pos0" default="-24.80"/>
+  	<arg name="y_pos0" default="3.13"/>
+  	<arg name="z_pos0" default="0"/>
+
+	<!--robot_1的初始位置-->
+	<arg name="x_pos1" default="-24.21"/>
+  	<arg name="y_pos1" default="6.22"/>
+  	<arg name="z_pos1" default="0"/>
+
+
+</launch>
