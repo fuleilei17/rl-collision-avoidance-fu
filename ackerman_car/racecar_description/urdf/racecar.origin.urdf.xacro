@@ -28,14 +28,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!-- 
-author:  fulei 
-date:    2022.11.21
-note: 改参数的时候发现，加大底盘、车轮等重量可以解决小车乱动的问题
-因为加大轮子和底盘的质量来解决缩小尺寸后车辆抖动的问题，所以舵机的扭矩加大，不然的话前轮转动的很慢
--->
-
-
 <robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- include sensors -->
   <xacro:include filename="$(find racecar_description)/urdf/sensors/lidar.xacro" />
@@ -48,52 +40,50 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
 
   <!-- chassis_length is measured along the x axis, chassis_width
        along the y axis, and chassis_height along the z axis. -->
-  <xacro:property name="chassis_length" value="0.12"/>
-  <xacro:property name="chassis_width" value="0.06"/>
+  <xacro:property name="chassis_length" value="0.258"/>
+  <xacro:property name="chassis_width" value="0.168"/>
   <xacro:property name="chassis_height" value="0.01"/>
-  <xacro:property name="chassis_mass" value="1"/><!-- 质量 -->
+  <xacro:property name="chassis_mass" value="2.788"/><!-- 质量 -->
 
   <!-- battery_dist is the distance between the inner edges of the
        batteries. battery_comp_depth is the battery compartment depth.
        battery_length is measured along the x axis, battery_width
        along the y axis, and battery_height along the z axis. -->
-  <xacro:property name="battery_x_offset" value="0.045"/>
-  <xacro:property name="battery_dist" value="0.03"/>
+  <xacro:property name="battery_x_offset" value="0.055"/>
+  <xacro:property name="battery_dist" value="0.065"/>
   <xacro:property name="battery_comp_depth" value="0.02"/>
   <xacro:property name="battery_comp_angle" value="0.34906585"/>
-  <xacro:property name="battery_length" value="0.05"/>
-  <xacro:property name="battery_width" value="0.02"/>
-  <xacro:property name="battery_height" value="0.01"/>
+  <xacro:property name="battery_length" value="0.16"/>
+  <xacro:property name="battery_width" value="0.047"/>
+  <xacro:property name="battery_height" value="0.024"/>
   <xacro:property name="battery_mass" value="0.5025"/>
 
   <!-- hub_dia and tire_dia are the diameters of the hub and tire, 轮毂和轮胎的直径
        respectively. hex_hub_depth is the distance that the hex hub（六角轮毂） is
        inset from the outer edge of the tire. It is set so that each wheel
        is a "zero offset" wheel（“零偏移”轮）. hex_hub_depth = tire_width / 2 -
-       axle_length. 
-       问题就出在这个部分！
-       -->
-  <xacro:property name="hub_dia" value="0.06"/>
-  <xacro:property name="tire_dia" value="0.07"/>
-  <xacro:property name="tire_width" value="0.04"/>
-  <xacro:property name="hex_hub_depth" value="0.005"/>
-  <xacro:property name="wheel_mass" value="0.8"/>
+       axle_length. -->
+  <xacro:property name="hub_dia" value="0.09652"/>
+  <xacro:property name="tire_dia" value="0.14605"/>
+  <xacro:property name="tire_width" value="0.0889"/>
+  <xacro:property name="hex_hub_depth" value="0.01445"/>
+  <xacro:property name="wheel_mass" value="0.29"/>
 
   <!-- hex_hub_dist is the distance between left and right hex hubs when
        the shock absorbers are fully extended. axle_length is the distance
        from a U joint to the corresponding hex hub. wheel_travel is the
        vertical wheel travel. -->
-  <xacro:property name="wheelbase" value="0.12"/>  <!-- 轴距 -->
-  <xacro:property name="hex_hub_dist" value="0.16"/> 
-  <xacro:property name="axle_length" value="0.015"/>
-  <xacro:property name="wheel_travel" value="0.08"/>
-  <xacro:property name="shock_z_offset" value="0.06"/>
+  <xacro:property name="wheelbase" value="0.335"/>  <!-- 轴距 -->
+  <xacro:property name="hex_hub_dist" value="0.365"/> 
+  <xacro:property name="axle_length" value="0.03"/>
+  <xacro:property name="wheel_travel" value="0.084"/>
+  <xacro:property name="shock_z_offset" value="0.0655"/>
 
   <!-- shock_eff_limit is 2 * ((shock_stroke / 2) * shock_spring_constant) N.
        shock_stroke is 0.028575 meters. shock_spring_constant, an approximation
        of a Traxxas Ultra Shock shock absorber spring's constant, is
        437.817 N/m. -->
-  <xacro:property name="shock_eff_limit" value="12.5106"/>  <!-- 12.5106 -->
+  <xacro:property name="shock_eff_limit" value="12.5106"/>
   <xacro:property name="shock_vel_limit" value="1000"/>
 
   <!-- The specifications for a Titan(R) 550 motor could not be found, so the
@@ -108,21 +98,20 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
        max_speed = 40 mph (30+ mph) = 17.8816 m/s
        axle_vel_limit = (2 * pi) * (max_speed / (pi * tire_dia)) =
          244.8696 rad/s -->
-  <xacro:property name="axle_eff_limit" value="50.12766"/><!-- 5.12766 -->
+  <xacro:property name="axle_eff_limit" value="5.12766"/>
   <xacro:property name="axle_vel_limit" value="244.8696"/>
 
   <!-- These constants are used to simulate a Traxxas 2056 servo operated at
        6 V. servo_stall_torque is measured in N m. servo_no_load_speed is
        measured in rad/s. -->
-  <!-- 因为加大轮子和底盘的质量来解决缩小尺寸后车辆抖动的问题，所以舵机的扭矩加大 -->   
-  <xacro:property name="servo_stall_torque" value="3.5649"/> <!-- 0.5649 -->
-  <xacro:property name="servo_no_load_speed" value="6.553"/><!-- 4.553 -->
+  <xacro:property name="servo_stall_torque" value="0.5649"/>
+  <xacro:property name="servo_no_load_speed" value="4.553"/>
 
-  <xacro:property name="layer_mass"   value="1" />
-  <xacro:property name="layer_x" value="0.17"/>
-  <xacro:property name="layer_y" value="0.085"/>
+  <xacro:property name="layer_mass"   value="0.0" />
+  <xacro:property name="layer_x" value="0.40"/>
+  <xacro:property name="layer_y" value="0.18"/>
   <xacro:property name="layer_z" value="0.01"/>
-  <xacro:property name="layer_height" value="0.06"/>
+  <xacro:property name="layer_height" value="0.08"/>
 
   <material name="battery_mat">
     <color rgba="0 0 1 1"/>
@@ -186,7 +175,7 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
       <child link="${prefix}_battery_offset"/>
       <origin xyz="${battery_x_offset - battery_length / 2}
                    ${reflect * battery_dist / 2}
-                   0.02"
+                   0"
               rpy="${reflect * battery_comp_angle} 0 0"/>
     </joint>
 
@@ -419,8 +408,7 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
   <!-- Chassis -->
   <link name="chassis">
     <visual>
-      <origin xyz="0 0 0.01"/>
-      <!-- origin xyz="0 0 ${-chassis_height / 2}"/ -->
+      <origin xyz="0 0 ${-chassis_height / 2}"/>
       <geometry>
         <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
       </geometry>
@@ -491,12 +479,12 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
     <origin xyz="0 0 ${layer_height}" rpy="0 0 0" />
   </xacro:layer>
 
-  <xacro:layer layer="lidar_platform" parent="platform_link" m="${layer_mass}" x="0.06" y="0.06" z="0.01">
-    <origin xyz="0.04 0 0.04" rpy="0 0 0" />
+  <xacro:layer layer="lidar_platform" parent="platform_link" m="${layer_mass}" x="0.12" y="0.10" z="0.01">
+    <origin xyz="0.08 0 ${layer_height}" rpy="0 0 0" />
   </xacro:layer>
 
   <joint name="lidar_joint" type="fixed">
-    <origin xyz="0 0 0.02" rpy="0 0 0" />
+    <origin xyz="0 0 0.03" rpy="0 0 0" />
     <parent link="lidar_platform_link"/>
     <child link="laser_link"/>
   </joint>
@@ -504,7 +492,7 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
   <lidar prefix="laser"/>
 
   <joint name="imu_joint" type="fixed">
-    <origin xyz="0.05 0 0.016" rpy="0 0 0" />
+    <origin xyz="0.16 0 0.015" rpy="0 0 0" />
     <parent link="platform_link"/>
     <child link="imu_link"/>
   </joint>
@@ -512,7 +500,7 @@ note: 改参数的时候发现，加大底盘、车轮等重量可以解决小�
   <imu prefix="imu"/>
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0.08 0 0.04" rpy="0 0 0" />
+    <origin xyz="0.16 0 0.05" rpy="0 0 0" />
     <parent link="platform_link"/>
     <child link="camera_link"/>
   </joint>

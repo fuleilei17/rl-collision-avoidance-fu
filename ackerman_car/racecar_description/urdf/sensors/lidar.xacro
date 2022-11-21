@@ -15,7 +15,8 @@
             <visual>
                 <origin xyz=" 0 0 0 " rpy="0 0 0" />
                 <geometry>
-                    <cylinder length="0.05" radius="0.05"/>
+                    <cylinder length="0.025" radius="0.025"/>
+                    <!-- cylinder length="0.05" radius="0.05" -->
                 </geometry>
                 <material name="tire_mat"/>
             </visual>
@@ -23,7 +24,8 @@
             <collision>
                 <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <geometry>
-                    <cylinder length="0.06" radius="0.05"/>
+                    <cylinder length="0.03" radius="0.025"/>
+                    <!--cylinder length="0.06" radius="0.05"-->
                 </geometry>
             </collision>
         </link>
