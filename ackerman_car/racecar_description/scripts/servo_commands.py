@@ -75,10 +75,10 @@ def set_speed(data):
     anL_front = limsteer(anL_front,0.6)  #最大转弯角度的弧度为0.6
     anR_front = limsteer(anR_front,0.6)
    
-    pub_vel_left_rear_wheel.publish(vL_rear*5)
-    pub_vel_right_rear_wheel.publish(vR_rear*5)
-    pub_vel_left_front_wheel.publish(vL_front*5)
-    pub_vel_right_front_wheel.publish(vR_front*5)
+    pub_vel_left_rear_wheel.publish(vL_rear*10)
+    pub_vel_right_rear_wheel.publish(vR_rear*10)
+    pub_vel_left_front_wheel.publish(vL_front*10)
+    pub_vel_right_front_wheel.publish(vR_front*10)
     pub_pos_left_steering_hinge.publish(anL_front)
     pub_pos_right_steering_hinge.publish(anR_front)
 
