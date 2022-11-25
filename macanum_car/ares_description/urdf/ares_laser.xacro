@@ -12,7 +12,7 @@
 
     <xacro:property name="camera_offset_x" value="0" />
     <xacro:property name="camera_offset_y" value="0" />
-    <xacro:property name="camera_offset_z" value="0.2" />
+    <xacro:property name="camera_offset_z" value="0.11" />
     <!-- Camera -->
     
     <joint name="camera_joint" type="fixed">

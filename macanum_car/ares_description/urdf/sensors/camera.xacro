@@ -3,6 +3,9 @@
 
     <xacro:macro name="camera" params="prefix:=camera">
         <!-- Create laser reference frame -->
+        <gazebo reference="${prefix}_link">
+    	    <material>Gazebo/FlatBlack</material>
+  	</gazebo>
         <link name="${prefix}_link">
             <inertial>
                 <mass value="0.1" />
@@ -15,21 +18,18 @@
             <visual>
                 <origin xyz=" 0 0 0 " rpy="0 0 0" />
                 <geometry>
-                    <box size="0.01 0.04 0.04" />
+                    <box size="0.01 0.02 0.02" />
                 </geometry>
-                <material name="black"/>
             </visual>
 
             <collision>
                 <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
                 <geometry>
-                    <box size="0.01 0.04 0.04" />
+                    <box size="0.01 0.02 0.02" />
                 </geometry>
             </collision>
         </link>
-        <gazebo reference="${prefix}_link">
-            <material>Gazebo/Black</material>
-        </gazebo>
+
 
         <gazebo reference="${prefix}_link">
             <sensor type="camera" name="camera_node">

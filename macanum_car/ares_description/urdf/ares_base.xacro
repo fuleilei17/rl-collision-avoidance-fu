@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="ares_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:macro name="ares_base">
+	  <gazebo reference="base_link">
+    	<material>Gazebo/FlatBlack</material>
+  	  </gazebo>
+ 		
 		<link name="base_link">
 			<inertial>
 				<origin xyz="0.00000813 0 0.02322078" />
@@ -12,9 +16,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/base_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="0.10196 0.10196 0.10196 1" />
-				</material>
+
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -23,6 +25,9 @@
 				</geometry>
 			</collision>
 		</link>
+	  <gazebo reference="wheel_lf_link">
+    	 <material>Gazebo/DarkGrey</material>
+  	  </gazebo>
 		<link name="wheel_lf_link">
 			<inertial>
 				<origin xyz="0 0.00856913 0" rpy="0 0 0" />
@@ -34,9 +39,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/wheel_lf_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="0.79216 0.81961 0.93333 1" />
-				</material>
+				
 			</visual>
 			<collision>
 				<origin xyz="0 0.0085707 0" rpy="0 0 0" />
@@ -51,6 +54,9 @@
 			<child link="wheel_lf_link" />
 			<axis xyz="0 -1 0" />
 		</joint>
+		<gazebo reference="wheel_lb_link">
+    			<material>Gazebo/DarkGrey</material>
+  	    	</gazebo>
 		<link name="wheel_lb_link">
 			<inertial>
 				<origin xyz="0 0.00856913 0" rpy="0 0 0" />
@@ -62,9 +68,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/wheel_lb_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="0.79216 0.81961 0.93333 1" />
-				</material>
+
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -79,6 +83,10 @@
 			<child link="wheel_lb_link" />
 			<axis xyz="0 -1 0" />
 		</joint>
+		
+		<gazebo reference="wheel_rf_link">
+    		<material>Gazebo/DarkGrey</material>
+  	    </gazebo>
 		<link name="wheel_rf_link">
 			<inertial>
 				<origin xyz="0 0.00856913 0" rpy="0 0 0" />
@@ -90,9 +98,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/wheel_rf_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="0.79216 0.81961 0.93333 1" />
-				</material>
+
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -107,6 +113,9 @@
 			<child link="wheel_rf_link" />
 			<axis xyz="0 -1 0" />
 		</joint>
+		<gazebo reference="wheel_rb_link">
+    		<material>Gazebo/DarkGrey</material>
+  	    </gazebo>
 		<link name="wheel_rb_link">
 			<inertial>
 				<origin xyz="0 0.00856913 0" rpy="0 0 0" />
@@ -118,9 +127,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/wheel_rb_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="0.79216 0.81961 0.93333 1" />
-				</material>
+
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -135,6 +142,10 @@
 			<child link="wheel_rb_link" />
 			<axis xyz="0 -1 0" />
 		</joint>
+		
+		<gazebo reference="controller_link">
+    		<material>Gazebo/DarkGrey</material>
+  	    </gazebo>		
 		<link name="controller_link">
 			<inertial>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -146,9 +157,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/controller_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="1 1 1 1" />
-				</material>
+
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -163,6 +172,16 @@
 			<child link="controller_link" />
 			<axis xyz="0 0 0" />
 		</joint>
+		
+		
+		<!--The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF. -->
+		<link name="dummy"> 
+		</link>
+		<joint name="dummy_joint" type="fixed">
+     		<parent link="dummy"/>
+     		<child link="base_link"/>
+		</joint>
+		
 		<gazebo>
 			<plugin name="mecanum_controller" filename="libgazebo_ros_planar_move.so">				
 				<commandTopic>cmd_vel</commandTopic>

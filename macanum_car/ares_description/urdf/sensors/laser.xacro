@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="laser" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:macro name="laser">
+	<gazebo reference="laser_link">
+    		<material>Gazebo/DarkGrey</material>
+  	</gazebo>
 		<link name="laser_link">
 			<inertial>
 				<origin xyz="0 0 0" rpy="0 0 0" />
@@ -12,9 +15,7 @@
 				<geometry>
 					<mesh filename="package://ares_description/meshes/laser_link.STL" />
 				</geometry>
-				<material name="">
-					<color rgba="0.79216 0.81961 0.93333 1" />
-				</material>
+  	
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
