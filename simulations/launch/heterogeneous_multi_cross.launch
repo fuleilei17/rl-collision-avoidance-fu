@@ -1,55 +1,55 @@
 <!-- 
 author:  fulei 
-date:    2022.11.21
+date:    2022.12.2
 summary： multi heterogeneous robots (ackerman/macanum/differ) in gazebo
-
+Cross World
 -->
 
 <launch>	
 	<!--robot_0的初始位置-->
-	<arg name="x_pos0" default="0.00"/>
-  	<arg name="y_pos0" default="-5.00"/>
+	<arg name="x_pos0" default="-0.34"/>
+  	<arg name="y_pos0" default="-4.43"/>
   	<arg name="z_pos0" default="0"/>
 
 	<!--robot_1的初始位置-->
-	<arg name="x_pos1" default="-1.15"/>
-  	<arg name="y_pos1" default="-4.86"/>
+	<arg name="x_pos1" default="1.855"/>
+  	<arg name="y_pos1" default="-0.29"/>
   	<arg name="z_pos1" default="0"/> 
 
 	<!--robot_2的初始位置-->
-	<arg name="x_pos2" default="-2.25"/>
-  	<arg name="y_pos2" default="-4.46"/>
+	<arg name="x_pos2" default="-1.11"/>
+  	<arg name="y_pos2" default="2.00"/>
   	<arg name="z_pos2" default="0"/>
 
 	<!--robot_3的初始位置-->
-	<arg name="x_pos3" default="-3.22"/>
-  	<arg name="y_pos3" default="-3.82"/>
+	<arg name="x_pos3" default="-0.38"/>
+  	<arg name="y_pos3" default="-2.66"/>
   	<arg name="z_pos3" default="0"/>
 
 	<!--robot_4的初始位置-->
-	<arg name="x_pos4" default="-4.02"/>
-  	<arg name="y_pos4" default="-2.97"/>
+	<arg name="x_pos4" default="4.19"/>
+  	<arg name="y_pos4" default="0.31"/>
   	<arg name="z_pos4" default="0"/>
 
 	<!--robot_5的初始位置-->
-	<arg name="x_pos5" default="-4.60"/>
-  	<arg name="y_pos5" default="-1.95"/>
+	<arg name="x_pos5" default="-0.22"/>
+  	<arg name="y_pos5" default="4.44"/>
   	<arg name="z_pos5" default="0"/>
 
 	<!--robot_6的初始位置-->
-	<arg name="x_pos6" default="-4.92"/>
-  	<arg name="y_pos6" default="-0.84"/>
+	<arg name="x_pos6" default="-4.84"/>
+  	<arg name="y_pos6" default="-0.55"/>
   	<arg name="z_pos6" default="0"/>
 	
 	<!--robot_7的初始位置-->
-	<arg name="x_pos7" default="-5.00"/>
-  	<arg name="y_pos7" default="-0.00"/>
+	<arg name="x_pos7" default="-3.96"/>
+  	<arg name="y_pos7" default="0.50"/>
   	<arg name="z_pos7" default="0"/>
 
 	<!--加载gazebo仿真地图-->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<!--<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace.world" />-->
-		<arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/gb1.world" />
+		<arg name="world_name" value="$(find simulations)/worlds/Cross.world" />
 		<arg name="paused" value="false"/>
 		<arg name="use_sim_time" value="true"/>
 		<arg name="gui" value="true"/>

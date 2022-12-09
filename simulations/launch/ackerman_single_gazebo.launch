@@ -64,7 +64,7 @@ summary： sigle ackerman robots in gazebo
 	
 	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
 	
-	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find racecar_description)/urdf/racecar.urdf.xacro' bodyframe:=robot_0 ns:=robot_0"/>
+	<param name="robot_description" command="$(find xacro)/xacro '$(find racecar_description)/urdf/racecar.urdf.xacro' bodyframe:=robot_0 ns:=robot_0"/>
 	
 	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
     	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
@@ -106,7 +106,7 @@ summary： sigle ackerman robots in gazebo
 	
 	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
 	
-	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find racecar_description)/urdf/racecar.origin.urdf.xacro' bodyframe:=robot_1 ns:=robot_1"/>
+	<param name="robot_description" command="$(find xacro)/xacro '$(find racecar_description)/urdf/racecar.origin.urdf.xacro' bodyframe:=robot_1 ns:=robot_1"/>
 	
 	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
     	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
