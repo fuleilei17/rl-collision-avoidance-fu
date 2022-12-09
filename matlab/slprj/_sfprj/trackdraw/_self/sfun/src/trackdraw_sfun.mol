@@ -1,0 +1,18 @@
+trackdraw_sfun.o
+c2_trackdraw.o
+trackdraw_sfun_registry.o
+"/usr/local/MATLAB/R2017a/bin/glnxa64/libmwjpegreader.so"
+
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwsf_runtime"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lfixedpoint"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lut"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lemlrt"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwmathutil"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwblas"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwsl_log_load_blocks"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwsimulink"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwsl_sfcn_cov_bridge"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwlapack"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwsl_simtarget_core"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwsl_simtarget_instrumentation"
+"-L/usr/local/MATLAB/R2017a/bin/glnxa64" "-lmwipp"
