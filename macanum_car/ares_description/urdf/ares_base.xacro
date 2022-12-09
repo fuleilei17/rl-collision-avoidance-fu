@@ -2,7 +2,7 @@
 <robot name="ares_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:macro name="ares_base">
 	  <gazebo reference="base_link">
-    	<material>Gazebo/FlatBlack</material>
+    	<material>Gazebo/BlueGlow</material>
   	  </gazebo>
  		
 		<link name="base_link">
