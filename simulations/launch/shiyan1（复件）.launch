@@ -1,0 +1,210 @@
+<!-- 
+author:  fulei 
+date:    2023.2.7
+summary： multi heterogeneous robots (ackerman/macanum/differ) in gazebo
+实验1 六台机器人
+-->
+
+<launch>	
+  	
+        <!--robot_0的初始位置-->
+	<arg name="x_pos0" default="2.50"/>
+  	<arg name="y_pos0" default="2.50"/>
+  	<arg name="z_pos0" default="0"/>
+
+	<!--robot_1的初始位置-->
+	<arg name="x_pos1" default="-2.50"/>
+  	<arg name="y_pos1" default="-2.50"/>
+  	<arg name="z_pos1" default="0"/> 
+
+	<!--robot_2的初始位置-->
+	<arg name="x_pos2" default="-2.50"/>
+  	<arg name="y_pos2" default="2.50"/>
+  	<arg name="z_pos2" default="0"/>
+
+	<!--robot_3的初始位置-->
+	<arg name="x_pos3" default="2.50"/>
+  	<arg name="y_pos3" default="-2.50"/>
+  	<arg name="z_pos3" default="0"/>
+
+	<!--robot_4的初始位置-->
+	<arg name="x_pos4" default="0.00"/>
+  	<arg name="y_pos4" default="2.50"/>
+  	<arg name="z_pos4" default="0"/>
+
+	<!--robot_5的初始位置-->
+	<arg name="x_pos5" default="0.00"/>
+  	<arg name="y_pos5" default="-2.50"/>
+  	<arg name="z_pos5" default="0"/>
+
+
+	<!--加载gazebo仿真地图-->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find simulations)/worlds/square.world" />
+		<arg name="paused" value="false"/>
+		<arg name="use_sim_time" value="true"/>
+		<arg name="gui" value="true"/>
+		<arg name="headless" value="false"/>
+		<arg name="debug" value="false"/>
+	</include>
+	
+
+	<!--机器人robot_0-->
+	<group ns="robot_0">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_6" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_0 -param robot_description -x $(arg x_pos0) -y $(arg y_pos0) -z $(arg z_pos0) " />
+	</group>
+
+	<!--机器人robot_1-->
+	<group ns="robot_1">
+	<!-- 加载机器人模型描述参数 -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_burger_for_autorace.urdf.xacro' ns:=robot_1" />
+	<!--在gazebo中加载turtlebot3模型-->
+	<node pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" name="spawn_urdf" args="-urdf -model robot_1 -param robot_description -x $(arg x_pos1) -y $(arg y_pos1) -z $(arg z_pos1) " />
+	</group>
+
+
+	<!--机器人robot_2-->
+	<group ns="robot_2">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_2 ns:=robot_2" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_2" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_2 -param robot_description -x $(arg x_pos2) -y $(arg y_pos2) -z $(arg z_pos2)"/> 
+          	
+	</group>
+
+
+	<!--机器人robot_3-->
+	<group ns="robot_3">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' bodyframe:=robot_3 ns:=robot_3" /> 
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_3" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_3 -param robot_description -x $(arg x_pos3) -y $(arg y_pos3) -z $(arg z_pos3)"/> 
+	
+	</group>
+
+
+
+	<!--机器人robot_4-->
+	<group ns="robot_4">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find racecar_description)/urdf/racecar.urdf.xacro' bodyframe:=robot_4 ns:=robot_4"/>
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_4" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_4 -param robot_description -x $(arg x_pos4) -y $(arg y_pos4) -z $(arg z_pos4)"/> 
+
+
+	 <!-- 从yaml文件加载联合控制器的参数 -->
+	<rosparam file="$(find bringup)/config/ctrl.yaml" command="load"/>
+	
+	<!-- 加载控制器 spawner -->
+	<node name="controller_manager" pkg="controller_manager" type="spawner" 
+	      respawn="false" output="screen"
+	      args="left_rear_wheel_velocity_controller       right_rear_wheel_velocity_controller
+	            left_front_wheel_velocity_controller      right_front_wheel_velocity_controller
+	            left_steering_hinge_position_controller   right_steering_hinge_position_controller
+	            joint_state_controller"/>
+
+	<!-- 舵机控制转换节点 -->
+	<node pkg="racecar_description" type="servo_commands.py" name="servo_commands" output="screen"></node>
+	
+	<!-- Allow for Gazebo to broadcast odom -->
+        <node pkg="racecar_description" name="gazebo_odometry_node" type="gazebo_odometry.py">
+        	<param name="robot_name"  value="robot_4"/>
+        </node>
+	
+	</group>
+	
+	<!--机器人robot_5-->
+	<group ns="robot_5">
+	
+	<!-- 加载机器人模型描述参数 bodyframe作用是向xacro文件中传参-->
+	
+	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find racecar_description)/urdf/racecar.urdf.xacro' bodyframe:=robot_5 ns:=robot_5"/>
+	
+	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  --> 
+    	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+	<!-- 运行robot_state_publisher节点，发布tf  -->
+	<!--<node name = "robot_state_publisher" pkg = "robot_state_publisher" type = "state_publisher">-->
+	<node name= "robot_state_publisher" pkg= "robot_state_publisher" type= "robot_state_publisher">
+		<param name="publish_frequency" type="double" value="20.0" />
+		<param name="tf_prefix" value="robot_5" />
+	</node>
+	
+	<!-- 在gazebo中加载机器人模型-->
+    	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot_5 -param robot_description -x $(arg x_pos5) -y $(arg y_pos5) -z $(arg z_pos5)"/> 
+
+
+	 <!-- 从yaml文件加载联合控制器的参数 -->
+	<rosparam file="$(find bringup)/config/ctrl.yaml" command="load"/>
+	
+	<!-- 加载控制器 spawner -->
+	<node name="controller_manager" pkg="controller_manager" type="spawner" 
+	      respawn="false" output="screen"
+	      args="left_rear_wheel_velocity_controller       right_rear_wheel_velocity_controller
+	            left_front_wheel_velocity_controller      right_front_wheel_velocity_controller
+	            left_steering_hinge_position_controller   right_steering_hinge_position_controller
+	            joint_state_controller"/>
+
+	<!-- 舵机控制转换节点 -->
+	<node pkg="racecar_description" type="servo_commands.py" name="servo_commands" output="screen"></node>
+	
+	<!-- Allow for Gazebo to broadcast odom -->
+        <node pkg="racecar_description" name="gazebo_odometry_node" type="gazebo_odometry.py">
+        	<param name="robot_name"  value="robot_5"/>
+        </node>
+        
+	</group>
+	
+
+
+	
+	
+</launch>
+
+

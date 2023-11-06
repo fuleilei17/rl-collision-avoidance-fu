@@ -41,7 +41,7 @@ square world
 
 	<!--加载gazebo仿真地图-->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<arg name="world_name" value="$(find simulations)/worlds/Square_person.world" />
+		<arg name="world_name" value="$(find simulations)/worlds/square.world" />
 		<arg name="paused" value="false"/>
 		<arg name="use_sim_time" value="true"/>
 		<arg name="gui" value="true"/>

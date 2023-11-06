@@ -16,7 +16,7 @@ from model.ppo import generate_action_no_sampling, transform_buffer
 
 
 
-MAX_EPISODES = 5000
+MAX_EPISODES = 8000
 LASER_BEAM = 512
 LASER_HIST = 3
 HORIZON = 200
@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
     env = StageWorld(OBS_SIZE, index=rank, num_env=NUM_ENV)
     reward = None
-    action_bound = [[0, -1], [1, 1]]
+    action_bound = [[0, -1], [0.4, 1]]
 
     if rank == 0:
         policy_path = 'policy'
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             os.makedirs(policy_path)
 
         file = policy_path + '/stage2.pth'
-        #file = policy_path + '/flGazebo1_4500'
+
         if os.path.exists(file):
             print ('####################################')
             print ('############Loading Model###########')

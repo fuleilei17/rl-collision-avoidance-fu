@@ -2,6 +2,7 @@ import time
 import rospy
 import copy
 import tf
+import os
 import numpy as np
 
 from geometry_msgs.msg import Twist, Pose
@@ -27,7 +28,7 @@ class StageWorld():
 
         self.index = index
         self.num_env = num_env
-        node_name = 'StageEnv_' + str(index)
+        node_name = 'RLEnv_' + str(index)
         rospy.init_node(node_name, anonymous=None)
 
         self.beam_mum = beam_num
@@ -112,6 +113,23 @@ class StageWorld():
         v_y = GT_odometry.twist.twist.linear.y
         v = np.sqrt(v_x**2 + v_y**2)
         self.speed_GT = [v, GT_odometry.twist.twist.angular.z]
+        
+        #存储轨迹
+        # 如果文件不存在则创建文件
+        subfolder = "data"
+        filename = 'data_' + str(self.index) + '.txt'
+        # 确定文件路径
+        file_path = os.path.join(os.getcwd(), subfolder, filename)
+        # 如果文件夹不存在则创建文件夹
+        if not os.path.exists(subfolder):
+            os.mkdir(subfolder)
+        # 如果文件不存在则创建文件
+        if not os.path.exists(file_path):
+            open(file_path, 'w').close()
+        #将新的x和y值追加到txt文件中
+        with open(file_path,'a') as f:
+            f.write(str(GT_odometry.pose.pose.position.x) + '\t' + str(GT_odometry.pose.pose.position.y) + '\n')
+        
 
     def laser_scan_callback(self, scan):
         self.scan_param = [scan.angle_min, scan.angle_max, scan.angle_increment, scan.time_increment,
@@ -152,6 +170,7 @@ class StageWorld():
 
     def get_laser_observation(self):
         scan = copy.deepcopy(self.scan)
+
         scan[np.isnan(scan)] = 6.0   #判断是否为空值
         scan[np.isinf(scan)] = 6.0   #判断是否为无穷大或无穷小值
         raw_beam_num = len(scan)
